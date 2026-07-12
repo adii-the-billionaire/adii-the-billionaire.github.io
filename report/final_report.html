@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Liquid Galaxy Tour Management Server | GSoC Report</title>
+    <meta name="description" content="GSoC final report by Aditya Shukla — Liquid Galaxy Tour Management Server for the Liquid Galaxy Project.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../assets/css/style.css">
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">GSoC with Liquid Galaxy</h1>
+        <p class="header" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+          Weekly updates — Liquid Galaxy Tour Management Server
+        </p>
+        <p class="header" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+          Author:
+          <a class="header name" href="https://github.com/adii-the-billionaire">Aditya Shukla</a>
+        </p>
+        <ul class="nav-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../community_bonding/week1.html">Weekly Blogs</a></li>
+          <li><a href="final_report.html">Final Report</a></li>
+          <li><a href="https://www.gsocorganizations.dev/organization/liquid-galaxy-project/">Organization</a></li>
+          <li><a href="https://github.com/adii-the-billionaire">GitHub</a></li>
+        </ul>
+      </header>
+
+      <section>
+        <h1>Liquid Galaxy Tour Management Server</h1>
+
+        <style>
+          p.para {
+            font-family: "'Source Code Pro', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+            font-size: 16px;
+          }
+          pre.ascii {
+            font-size: 12px;
+            line-height: 1.35;
+            overflow-x: auto;
+            background: #f5f3ee;
+            padding: 12px;
+            border: 1px solid #ddd;
+          }
+        </style>
+
+        <p class="para">Mon, September 12</p>
+
+        <h3 id="final-report">FINAL REPORT</h3>
+
+        <p align="center">
+          <img src="../assets/GSoC-icon.png" width="30%" height="30%" alt="Google Summer of Code" />
+        </p>
+
+        <table style="width:100%" class="profile">
+          <tr>
+            <td>Organization</td>
+            <td>
+              <a href="https://www.gsocorganizations.dev/organization/liquid-galaxy-project/">Liquid Galaxy Project</a>
+              (GSoC 2022)
+            </td>
+          </tr>
+          <tr>
+            <td>Project</td>
+            <td>Liquid Galaxy Tour Management Server</td>
+          </tr>
+          <tr>
+            <td>Student</td>
+            <td>Aditya Shukla</td>
+          </tr>
+          <tr>
+            <td>Mentor</td>
+            <td>Marc Gonzalez Capdevila</td>
+          </tr>
+          <tr>
+            <td>Stack</td>
+            <td>Node.js · Express.js · MongoDB · Socket.IO · SSH (ssh2)</td>
+          </tr>
+        </table>
+
+        <h3>Abstract</h3>
+        <p align="justify">
+          In this report, I summarize the work done for my Google Summer of Code project with the
+          <a href="https://www.liquidgalaxy.eu/">Liquid Galaxy Project</a>.
+          The aim was to build the <strong>Liquid Galaxy Tour Management Server</strong> —
+          a Node.js / Express.js backend that simplifies management, execution, and monitoring of
+          KML (Keyhole Markup Language) tours on a Liquid Galaxy installation.
+          The system acts as a centralized control server so users can upload, organize, edit, and
+          launch virtual tours on the Liquid Galaxy cluster through a RESTful API and real-time communication.
+        </p>
+        <p align="justify">
+          Liquid Galaxy is a multi-display visualization platform powered by Google Earth, where
+          synchronized computers render immersive panoramic views. Traditionally, interacting with
+          the system requires manual file transfers and command execution. This project automates
+          those tasks with a secure backend that abstracts the complexity of the underlying infrastructure.
+        </p>
+
+        <h3>Problem Statement</h3>
+        <p align="justify">Managing KML tours in a Liquid Galaxy environment involved many manual steps:</p>
+        <ul>
+          <li>Uploading KML files to the master machine</li>
+          <li>Organizing hundreds of tour files</li>
+          <li>Executing SSH commands manually</li>
+          <li>Monitoring execution status</li>
+          <li>Synchronizing commands across multiple display nodes</li>
+          <li>Handling user authentication</li>
+        </ul>
+        <p align="justify">
+          These manual operations increase configuration errors and reduce operational efficiency.
+          The objective was a centralized backend capable of automating these operations through
+          REST APIs and WebSocket communication.
+        </p>
+
+        <h3>Objectives</h3>
+        <ul>
+          <li>Build a RESTful API using Express.js.</li>
+          <li>Upload and manage KML / KMZ tour files.</li>
+          <li>Organize tours into folders with search, tags, and favorites.</li>
+          <li>Execute tours remotely on Liquid Galaxy via secure SSH.</li>
+          <li>Provide real-time status updates using Socket.IO.</li>
+          <li>Maintain user authentication (JWT, bcrypt, roles).</li>
+          <li>Store metadata and execution logs in MongoDB.</li>
+          <li>Expose dashboard statistics for operators.</li>
+          <li>Design an easily extensible backend architecture.</li>
+        </ul>
+
+        <h3>Proposed Architecture</h3>
+        <p align="justify">
+          The application introduces a middleware server between the frontend dashboard and the
+          Liquid Galaxy cluster:
+        </p>
+        <pre class="ascii">                User Dashboard
+                       │
+                HTTP / Socket.IO
+                       │
+              Express.js REST Server
+                       │
+      ┌────────────────┼────────────────┐
+      │                │                │
+ MongoDB          File Storage       SSH Module
+      │                │                │
+      └─────────────── Liquid Galaxy ───────────────┘
+                       Cluster</pre>
+        <p align="justify">
+          The backend exposes APIs for every operation while maintaining secure communication with the cluster.
+        </p>
+
+        <h3>Technology Stack</h3>
+        <table style="width:100%" class="profile">
+          <tr><td>Backend</td><td>Node.js</td></tr>
+          <tr><td>Framework</td><td>Express.js</td></tr>
+          <tr><td>Database</td><td>MongoDB</td></tr>
+          <tr><td>Authentication</td><td>JWT · bcrypt</td></tr>
+          <tr><td>Real-Time</td><td>Socket.IO</td></tr>
+          <tr><td>SSH</td><td>ssh2</td></tr>
+          <tr><td>File Upload</td><td>Multer</td></tr>
+          <tr><td>Logging</td><td>Winston</td></tr>
+          <tr><td>Validation</td><td>Joi</td></tr>
+          <tr><td>API Testing</td><td>Postman</td></tr>
+        </table>
+
+        <h3>Contributions before GSoC</h3>
+        <ul>
+          <li>Built Node.js / Express REST APIs and MongoDB-backed services (MERN stack practice).</li>
+          <li>Worked on authentication flows (login, JWT-style session patterns, password hashing concepts).</li>
+          <li>Implemented file-oriented and CRUD backends useful for tour metadata management.</li>
+          <li>Studied Liquid Galaxy ecosystem docs and KML tour workflows for Google Earth displays.</li>
+          <li>
+            Prior open-source / learning repos on
+            <a href="https://github.com/adii-the-billionaire">GitHub</a>
+            (note: an earlier GitHub account was lost; this profile is the current public identity).
+          </li>
+        </ul>
+
+        <h3>Project Work</h3>
+        <ul>
+          <li>
+            <h4>1. User Authentication</h4>
+            Only authorized users can access the server. Implemented login / logout, JWT authentication,
+            password hashing with bcrypt, role management, and Express middleware guards so tour
+            upload and execution endpoints stay protected.
+          </li>
+
+          <li>
+            <h4>2. KML Upload Module</h4>
+            Users upload KML tour files through REST APIs (<code>POST /api/tours/upload</code>).
+            Supported single KML and KMZ uploads, file validation, duplicate detection, metadata
+            extraction, and file-size limits for <code>.kml</code> / <code>.kmz</code> formats via Multer.
+          </li>
+
+          <li>
+            <h4>3. Tour Management Module</h4>
+            After uploading, users organize tours: rename, delete, move folders, search, tag, and
+            favorite. MongoDB stores tour name, description, author, upload date, category, tags,
+            and file location for reliable cataloging across large tour libraries.
+          </li>
+
+          <li>
+            <h4>4. REST API Layer</h4>
+            Express.js exposes JSON APIs for the frontend dashboard, including:
+            <code>GET /api/tours</code>, <code>GET /api/tours/:id</code>, <code>POST /api/tours</code>,
+            <code>PUT /api/tours/:id</code>, <code>DELETE /api/tours/:id</code>, and
+            <code>POST /api/tours/run/:id</code>. Responses follow a consistent success/message shape
+            for easy client integration.
+          </li>
+
+          <li>
+            <h4>5. SSH Command Engine</h4>
+            The server connects securely to the Liquid Galaxy master machine using the <code>ssh2</code>
+            package. Workflow: Node server → SSH → master machine → Google Earth → display nodes.
+            Functions include connect, authenticate, execute shell commands, upload KML, restart
+            services, and trigger fly-to events — removing the need for manual SSH sessions.
+          </li>
+
+          <li>
+            <h4>6. Real-Time Communication (Socket.IO)</h4>
+            Socket.IO provides instant updates for upload progress, tour execution status, connected
+            users, cluster health, and notifications. Events include
+            <code>tourUploaded</code>, <code>tourRunning</code>, <code>tourCompleted</code>,
+            <code>tourFailed</code>, and <code>clusterConnected</code>.
+          </li>
+
+          <li>
+            <h4>7. Tour Execution Engine</h4>
+            This module sends KML commands to Google Earth. Pipeline:
+            receive API request → validate tour → generate KML command → SSH connection →
+            transfer file → execute command → Google Earth opens tour → status returned to the client.
+          </li>
+
+          <li>
+            <h4>8. Logging System</h4>
+            Every activity is logged (user login, upload, delete, execution, errors, SSH commands)
+            and stored in MongoDB with user, action, status, timestamp, and IP address for auditability.
+          </li>
+
+          <li>
+            <h4>9. Search &amp; Dashboard Statistics</h4>
+            Search supports keyword, category, date, and author filters
+            (e.g. <code>GET /api/search?q=historical</code>).
+            Dashboard analytics expose total tours, active users, upload count, executed tours,
+            failed executions, and storage usage.
+          </li>
+
+          <li>
+            <h4>10. Security &amp; Project Structure</h4>
+            Security features: JWT auth, password hashing, HTTPS support, file-type validation,
+            rate limiting, input validation (Joi), CORS, Helmet, and secure SSH authentication.
+            Codebase organized into controllers, routes, middleware, models, services, sockets,
+            uploads, config, utils, logs, and <code>app.js</code> / <code>package.json</code>.
+          </li>
+        </ul>
+
+        <h3>Database Design</h3>
+        <ul>
+          <li><strong>Users:</strong> _id, name, email, password, role, createdAt</li>
+          <li><strong>Tours:</strong> _id, title, description, filename, filepath, category, tags, uploadedBy, createdAt</li>
+          <li><strong>Logs:</strong> _id, user, action, status, timestamp, ipAddress</li>
+        </ul>
+
+        <h3>Advantages Delivered</h3>
+        <ul>
+          <li>Centralized tour management</li>
+          <li>Reduced manual intervention on the cluster</li>
+          <li>Faster KML deployment</li>
+          <li>Secure cluster communication over SSH</li>
+          <li>Real-time monitoring via Socket.IO</li>
+          <li>Scalable, dashboard-friendly architecture</li>
+        </ul>
+
+        <h3>Future Work</h3>
+        <ul>
+          <li>Drag-and-drop tour builder</li>
+          <li>Multi-user collaboration</li>
+          <li>Cloud storage integration</li>
+          <li>Scheduled tour execution</li>
+          <li>AI-based route recommendations</li>
+          <li>Interactive map editor</li>
+          <li>Docker deployment and Kubernetes orchestration</li>
+          <li>Richer role-based administration and mobile app support</li>
+        </ul>
+
+        <h3>Conclusion</h3>
+        <p align="justify">
+          Working with the Liquid Galaxy Project was a challenging and rewarding experience.
+          The Tour Management Server turns a previously manual KML workflow into an API-driven,
+          authenticated, and observable backend suitable for museum and lab operators.
+          Almost all planned objectives — REST APIs, upload/management, SSH execution, real-time
+          status, MongoDB metadata, and logging — were implemented in an extensible Node.js architecture.
+          I learned a great deal about Liquid Galaxy operations, secure remote execution, Socket.IO
+          event design, and structuring production Express services.
+        </p>
+
+        <h3>Acknowledgment</h3>
+        <p align="justify">
+          The Liquid Galaxy community is extremely helpful. I am immensely indebted to my mentor
+          <strong>Marc Gonzalez Capdevila</strong>, a senior GSoC mentor for the Liquid Galaxy Project,
+          who guided the project through design and implementation decisions.
+          Thanks also to the Liquid Galaxy org admins and community
+          (<a href="https://www.liquidgalaxy.eu/">liquidgalaxy.eu</a>,
+          <a href="https://www.gsocorganizations.dev/organization/liquid-galaxy-project/">GSoC Organizations listing</a>)
+          for making immersive open-source visualization work possible.
+          I look forward to continuing contributions around Liquid Galaxy tooling.
+        </p>
+
+        <p>
+          <a href="../index.html">← Click here for home / weekly blogs.</a>
+        </p>
+      </section>
+    </div>
+  </body>
+</html>

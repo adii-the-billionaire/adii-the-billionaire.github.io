@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Coding Week 3 | GSoC Liquid Galaxy</title>
+    <meta name="description" content="Coding Period — Week 3 (15 June – 21 June)">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../assets/css/style.css">
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">GSoC with Liquid Galaxy</h1>
+        <p class="header" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+          Weekly updates — Liquid Galaxy Tour Management Server
+        </p>
+        <p class="header" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+          Author:
+          <a class="header name" href="https://github.com/adii-the-billionaire">Aditya Shukla</a>
+        </p>
+        <ul class="nav-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../report/final_report.html">Final Report</a></li>
+          <li><a href="https://www.gsocorganizations.dev/organization/liquid-galaxy-project/">Organization</a></li>
+          <li><a href="https://github.com/adii-the-billionaire">GitHub</a></li>
+        </ul>
+      </header>
+
+      <section>
+        <h1>Liquid Galaxy Tour Management Server</h1>
+        <style>
+          p.para {
+            font-family: "'Source Code Pro', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+            font-size: 16px;
+          }
+        </style>
+        <p class="para">Tue, June 21</p>
+        <h3>Coding Period — Week 3 (15 June – 21 June)</h3>
+
+        <p align="justify" class="para">
+          Built the data layer for tours and activity logs so the server can catalog hundreds of KML files.
+        </p>
+        <p align="justify" class="para"><strong>Delivered:</strong></p>
+        <ul>
+          <li>Tours collection: title, description, filename, filepath, category, tags, uploadedBy, createdAt.</li>
+          <li>Logs collection: user, action, status, timestamp, ipAddress.</li>
+          <li>Mongoose indexes on title, tags, and uploadedBy for faster search.</li>
+          <li>Service helpers for create / update / soft-delete tour metadata.</li>
+        </ul>
+        <p align="justify" class="para">Next week: Multer-based KML / KMZ upload pipeline.</p>
+
+        <p class="week-nav">
+          <a href="../coding_period/week2.html">← Previous</a> · <a href="../coding_period/week4.html">Next →</a>
+        </p>
+        <p><a href="../index.html">← Back to home / weekly blogs</a></p>
+      </section>
+    </div>
+  </body>
+</html>

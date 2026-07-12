@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Coding Weeks 11–12 | GSoC Liquid Galaxy</title>
+    <meta name="description" content="Coding Period — Weeks 11 &amp; 12 (10 August – 23 August)">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../assets/css/style.css">
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">GSoC with Liquid Galaxy</h1>
+        <p class="header" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+          Weekly updates — Liquid Galaxy Tour Management Server
+        </p>
+        <p class="header" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+          Author:
+          <a class="header name" href="https://github.com/adii-the-billionaire">Aditya Shukla</a>
+        </p>
+        <ul class="nav-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../report/final_report.html">Final Report</a></li>
+          <li><a href="https://www.gsocorganizations.dev/organization/liquid-galaxy-project/">Organization</a></li>
+          <li><a href="https://github.com/adii-the-billionaire">GitHub</a></li>
+        </ul>
+      </header>
+
+      <section>
+        <h1>Liquid Galaxy Tour Management Server</h1>
+        <style>
+          p.para {
+            font-family: "'Source Code Pro', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+            font-size: 16px;
+          }
+        </style>
+        <p class="para">Tue, August 23</p>
+        <h3>Coding Period — Weeks 11 &amp; 12 (10 August – 23 August)</h3>
+
+        <p align="justify" class="para">
+          Closing coding weeks — observability, search, analytics, and security polish.
+        </p>
+        <p align="justify" class="para"><strong>Delivered:</strong></p>
+        <ul>
+          <li>Winston + MongoDB logging for login, upload, delete, execution, SSH errors.</li>
+          <li>Search API: <code>GET /api/search?q=...</code> with category, date, author filters.</li>
+          <li>Dashboard stats: total tours, active users, uploads, executed / failed runs, storage.</li>
+          <li>Rate limiting, Helmet, CORS lockdown, Joi everywhere, file-type checks.</li>
+          <li>README, Postman collection, and sample env for future contributors.</li>
+        </ul>
+        <p align="justify" class="para">
+          Final evaluation prep with Marc. Stretch ideas parked for future work:
+          drag-and-drop builder, scheduled tours, Docker / K8s.
+          See the <a href="../report/final_report.html">Final Report</a> for the full summary.
+        </p>
+
+        <p class="week-nav">
+          <a href="../coding_period/week9_and_10.html">← Previous</a> · <a href="../report/final_report.html">Final Report →</a>
+        </p>
+        <p><a href="../index.html">← Back to home / weekly blogs</a></p>
+      </section>
+    </div>
+  </body>
+</html>

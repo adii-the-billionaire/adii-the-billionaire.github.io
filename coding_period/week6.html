@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Coding Week 6 | GSoC Liquid Galaxy</title>
+    <meta name="description" content="Coding Period — Week 6 (06 July – 12 July)">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../assets/css/style.css">
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">GSoC with Liquid Galaxy</h1>
+        <p class="header" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+          Weekly updates — Liquid Galaxy Tour Management Server
+        </p>
+        <p class="header" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+          Author:
+          <a class="header name" href="https://github.com/adii-the-billionaire">Aditya Shukla</a>
+        </p>
+        <ul class="nav-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../report/final_report.html">Final Report</a></li>
+          <li><a href="https://www.gsocorganizations.dev/organization/liquid-galaxy-project/">Organization</a></li>
+          <li><a href="https://github.com/adii-the-billionaire">GitHub</a></li>
+        </ul>
+      </header>
+
+      <section>
+        <h1>Liquid Galaxy Tour Management Server</h1>
+        <style>
+          p.para {
+            font-family: "'Source Code Pro', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+            font-size: 16px;
+          }
+        </style>
+        <p class="para">Tue, July 12</p>
+        <h3>Coding Period — Week 6 (06 July – 12 July)</h3>
+
+        <p align="justify" class="para">
+          Mid-term checkpoint week — solidified the <strong>REST API layer</strong> for the dashboard.
+        </p>
+        <p align="justify" class="para"><strong>Endpoints ready:</strong></p>
+        <ul>
+          <li><code>GET /api/tours</code> · <code>GET /api/tours/:id</code></li>
+          <li><code>POST /api/tours</code> · <code>PUT /api/tours/:id</code> · <code>DELETE /api/tours/:id</code></li>
+          <li><code>POST /api/tours/run/:id</code> (stub wired for SSH engine next)</li>
+          <li>Joi validation on bodies and params; Postman collection for mentor demos.</li>
+        </ul>
+        <p align="justify" class="para">
+          Shared a short demo video of upload → list → update with Marc.
+          Next two weeks: real SSH command engine against the master machine.
+        </p>
+
+        <p class="week-nav">
+          <a href="../coding_period/week5.html">← Previous</a> · <a href="../coding_period/week7_and_8.html">Next →</a>
+        </p>
+        <p><a href="../index.html">← Back to home / weekly blogs</a></p>
+      </section>
+    </div>
+  </body>
+</html>
